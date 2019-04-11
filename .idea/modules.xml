@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DrcomAndroidHAUST.iml" filepath="$PROJECT_DIR$/DrcomAndroidHAUST.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/haust-drcom.iml" filepath="$PROJECT_DIR$/haust-drcom.iml" />
     </modules>
   </component>
 </project>

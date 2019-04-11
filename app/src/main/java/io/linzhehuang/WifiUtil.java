@@ -1,4 +1,4 @@
-package haust.drcomandroidhaust.drcom.util;
+package io.linzhehuang;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
@@ -42,7 +42,7 @@ public class WifiUtil {
      */
     public static boolean currentIsSchoolWifi(WifiUtil wifiUtils) {
         return true;
-        //TODO 知道学校wifi名后 改下面这个数组，解开注释 就行了
+
 //        final String drcomSSid[] = {"gdufe","gdufe-teacher","Young"}; //能上网的wifi名
 //        String wifiName = wifiUtils.getSSID();
 //        wifiName = wifiName.replace("\"","");   //4.0以上的getSSID返回 "gdufe" 带了引号

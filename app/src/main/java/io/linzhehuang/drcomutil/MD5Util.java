@@ -1,4 +1,4 @@
-package haust.drcomandroidhaust.drcom.drcom;
+package io.linzhehuang.drcomutil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,14 +7,8 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import haust.drcomandroidhaust.drcom.drcom.ByteUtil;
-
-/**
- * Created by lin on 2017-01-10-010.
- * MD5
- */
-public class MD5 {
-    private static final byte[] zero16 = new byte[16];
+public class MD5Util {
+	private static final byte[] zero16 = new byte[16];
 
     public static byte[] md5(byte[]... bytes) {
         int len = 0;
@@ -81,18 +75,4 @@ public class MD5 {
     public static byte[] decrypt3DES(byte[] keybyte, byte[] secret) {
         return des(Cipher.DECRYPT_MODE, keybyte, secret);
     }
-
-    public static void main(String[] args) {
-        byte[] enk = ByteUtil.ljust("1".getBytes(), DES_KEY_LEN);//用于加密的密码，必须 24 长度
-        String password = "a";//要加密的字符串
-        System.out.println("加密前的字符串:" + password + " | " + ByteUtil.toHexString(password.getBytes()));
-        byte[] encoded = encrypt3DES(enk, password.getBytes());
-        System.out.println("加密后:" + ByteUtil.toHexString(encoded));
-        byte[] srcBytes = decrypt3DES(enk, ByteUtil.fromHex(ByteUtil.toHexString(encoded), ' '));
-        System.out.println("解密后的字符串:" + new String(srcBytes) + " | " + ByteUtil.toHexString(srcBytes));
-    }/*
-     * 加密前的字符串:123456 | 31 32 33 34 35 36
-     * 加密后的字符串:ǋ�Y�_l� | C7 8B C1 59 94 5F 6C AE
-     * 解密后的字符串:123456 | 31 32 33 34 35 36
-     */
 }
