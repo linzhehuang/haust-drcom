@@ -40,5 +40,5 @@ captures/
 *.jks
 
 # Do not ignore hasut-drcom.apk
-!resource/hasut-drcom.apk
+!resource/haust-drcom.apk
 
