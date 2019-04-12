@@ -49,7 +49,7 @@ public class DRCOMUtil {
 		}
 
 		// receive challenge response packet
-		packet = PacketUtil.generateChallangeResponsePack();
+		packet = PacketUtil.generateChallengeResponsePack();
 		try {
 			client.receive(packet);
 		} catch (SocketTimeoutException e) {
@@ -91,7 +91,8 @@ public class DRCOMUtil {
 		}
 		return DRCOMState.UNKNOWN_ERROR;
 	}
-	
+
+	// logout will cause unknown error, so don't use it
 	public static boolean logout(HostConf conf) {
 		try {
 			client.send(PacketUtil.generateLogoutPack(conf, DRCOMConf.AUTH_SERVER, DRCOMConf.PORT, salt, tail1));

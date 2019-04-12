@@ -28,14 +28,14 @@ public class PacketUtil {
 		return ret;
 	}
 	
-	public static DatagramPacket generateChallangeResponsePack() {
+	public static DatagramPacket generateChallengeResponsePack() {
 		byte[] buf = new byte[76];
 		return new DatagramPacket(buf, buf.length);
 	}
 	
 	/**
 	 * 
-	 * @param pack challenge response packet
+	 * @param packet challenge response packet
 	 * @param salt 4 bytes output argument 
 	 * @param clientHost 4 bytes output argument
 	 * @return
@@ -51,7 +51,8 @@ public class PacketUtil {
 	}
 	
 	/**
-	 * 
+	 *  The login packet is complex, there is not a standard format. Follow format works worse than
+     *  than python version. But I don't know the reason.
 	 * @param conf
 	 * @param host
 	 * @param port
@@ -199,7 +200,7 @@ public class PacketUtil {
 	public static int getLoginErrorCode(DatagramPacket packet) {
 		byte[] buf = packet.getData();
 		switch (buf[4]) {
-			case 0x03:
+			case 0x03:  // sometimes the network is down , it will also get 0x03 code
 				return 1;
 			case 0x0b:
 				return 2;
@@ -279,7 +280,6 @@ public class PacketUtil {
         bigInteger = bigInteger.multiply(BigInteger.valueOf(1968));
         bigInteger = bigInteger.and(BigInteger.valueOf(0xff_ff_ff_ffL));
         byte[] bytes = bigInteger.toByteArray();
-        //System.out.println(ByteUtil.toHexString(bytes));
         len = bytes.length;
         i = 0;
         byte[] ret = new byte[4];

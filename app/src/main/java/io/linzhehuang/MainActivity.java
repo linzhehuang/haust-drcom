@@ -44,22 +44,6 @@ public class MainActivity extends Activity {
         bindLoginButtonEvent();
         bindEditTextEvent();
         DRCOMUtil.init();
-
-
-        final String account = accountEdit.getText().toString();
-        final String password = passwordEdit.getText().toString();
-        final String macAddress = wifiUtil.getMacAddress();
-        final HostConf conf = new HostConf(account, password, macAddress);
-
-        new Thread(new Runnable() {
-            public void run() {
-                DRCOMState state = DRCOMUtil.login(conf);
-                if (state == DRCOMState.LOGGED) {
-                    logged = true;
-                    setLoggedStatus();
-                }
-            }
-        }).start();
     }
 
     private void checkoutEditTexts() {
@@ -89,60 +73,21 @@ public class MainActivity extends Activity {
                 final String macAddress = wifiUtil.getMacAddress();
                 final HostConf conf = new HostConf(account, password, macAddress);
 
-                if (logged == false) {
-                    tip(R.string.login_info);
-                    new Thread(new Runnable() {
-                        public void run() {
-                            DRCOMState state = DRCOMUtil.login(conf);
-                            if (state == DRCOMState.LOGGED) {
-                                logged = true;
-                                saveInfo(account, password);
-                                innerTip(R.string.login_success);
-                                setLoggedStatus();
-                            } else if (state == DRCOMState.AUTH_ERROR) {
-                                innerTip(R.string.info_error);
-                            } else {
-                                innerTip(R.string.unknown_error);
-                            }
+                tip(R.string.login_info);
+                new Thread(new Runnable() {
+                    public void run() {
+                        DRCOMState state = DRCOMUtil.login(conf);
+                        if (state == DRCOMState.LOGGED) {
+                            logged = true;
+                            saveInfo(account, password);
+                            innerTip(R.string.login_success);
+                        } else if (state == DRCOMState.AUTH_ERROR) {
+                            innerTip(R.string.info_error);
+                        } else {
+                            innerTip(R.string.unknown_error);
                         }
-                    }).start();
-                } else {
-                    tip(R.string.logout_info);
-                    new Thread(new Runnable() {
-                        public void run() {
-                            if (DRCOMUtil.logout(conf)) {
-                                logged = false;
-                                innerTip(R.string.logout_success);
-                                setUnloggedStatus();
-                            } else {
-                                innerTip(R.string.logout_failed);
-                            }
-                        }
-                    }).start();
-                }
-
-            }
-        });
-    }
-
-    private void setLoggedStatus() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable(){
-            public void run(){
-                accountEdit.setEnabled(false);
-                passwordEdit.setEnabled(false);
-                loginButton.setText(R.string.logged_text);
-            }
-        });
-    }
-
-    private void setUnloggedStatus() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable(){
-            public void run(){
-                accountEdit.setEnabled(true);
-                passwordEdit.setEnabled(true);
-                loginButton.setText(R.string.login_text);
+                    }
+                }).start();
             }
         });
     }
